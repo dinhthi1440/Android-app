@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     fun calculate(str: String): Double {
         var listStr: MutableList<String> = splitStringToCalculation(str).toMutableList()
         var sumValue: Double = 0.0
-        var regex = "^[.+-×÷]$".toRegex()
+        var regex = "^[.×÷+-]$".toRegex()
         if(listStr.size==1){
             if (listStr[0].matches(regex)){
                 sumValue = 0.0
