@@ -23,5 +23,6 @@ class Home : AppCompatActivity() {
             startActivity(itent)
             finish()
         }
+        //
     }
 }
