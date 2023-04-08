@@ -6,26 +6,22 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 
-class home : AppCompatActivity() {
+class Home : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         var showUserName: TextView = findViewById(R.id.showUser)
         var showPassWord: TextView = findViewById(R.id.showPassword)
         val signOut: Button = findViewById<Button>(R.id.signout)
-
-        val userName = intent.getStringExtra("username")
-        val passWord = intent.getStringExtra("password")
-
-        showUserName.text= userName
-        showPassWord.text = passWord
-
+        showUserName.text= intent.getStringExtra("username")
+        showPassWord.text = intent.getStringExtra("password")
         signOut.setOnClickListener {
-            val itent = Intent(this, login:: class.java)
+            val edit = getSharedPreferences("myAcc", MODE_PRIVATE).edit()
+            edit.clear()
+            edit.commit()
+            val itent = Intent(this, Login:: class.java)
             startActivity(itent)
             finish()
         }
-
-
     }
 }

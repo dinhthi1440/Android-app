@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 
-class register : AppCompatActivity() {
+class SignUp : AppCompatActivity() {
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class register : AppCompatActivity() {
         var warningPassW2: TextView = findViewById(R.id.waringpassword2)
 
         returnlogin.setOnClickListener {
-            val itent1 = Intent(this, login:: class.java)
+            val itent1 = Intent(this, Login:: class.java)
             startActivity(itent1)
             finish()
         }
@@ -33,7 +33,7 @@ class register : AppCompatActivity() {
             var str2: String = checkPassWord(pass1.text.toString(), warningPassW1).toString()
             if(str1=="true" && str2 =="true"){
                 if(checkTrue(pass1.text.toString(), pass2.text.toString(), warningPassW2) == true){
-                    val itent = Intent(this, home:: class.java)
+                    val itent = Intent(this, Home:: class.java)
                     itent.putExtra("username", user.text.toString())
                     itent.putExtra("password", pass2.text.toString())
                     startActivity(itent)
@@ -64,7 +64,6 @@ class register : AppCompatActivity() {
 
     }
     fun checkPassWord(str: String, t: TextView): Boolean {
-        /*var reg = Regex(""""^(?=.*[A-Z])(?=.*\\\\d)(?=.*[@\\\$!%*?&])[A-Za-z\\\\d@\\\$!%*?&]{8,}\$""")*/
         var reg = Regex("""^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$""")
         if(str.matches(reg)){
             t.text=""
