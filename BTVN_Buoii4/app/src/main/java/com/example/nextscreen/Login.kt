@@ -3,8 +3,6 @@ package com.example.nextscreen
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import com.example.nextscreen.databinding.ActivityLoginBinding
@@ -13,25 +11,24 @@ class Login : AppCompatActivity() {
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        var myUser: String = "DinhVanThi"
-        var myPass: String = "54654611Thi"
+        setContentView(binding.root)
+        val myUser: String = "DinhVanThi"
+        val myPass: String = "54654611Thi"
         val save = getSharedPreferences("myAcc", MODE_PRIVATE)
-        var retunrSignUp: TextView = findViewById(R.id.register)
-        var loginButton: Button = findViewById(R.id.input_button)
-        var inputTextUser: EditText = findViewById(R.id.inputLogin)
-        var inputTextPass: EditText = findViewById(R.id.passwordlogin)
-        var warningUse: TextView = findViewById(R.id.waringuser)
-        var warningPass: TextView = findViewById(R.id.waringpassword)
-        var rememberPass: CheckBox = findViewById(R.id.RememberAcc)
-        retunrSignUp.setOnClickListener {
+        val inputTextUser: EditText = findViewById(R.id.inputLogin)
+        val inputTextPass: EditText = findViewById(R.id.passwordlogin)
+        val warningUse: TextView = findViewById(R.id.waringuser)
+        val warningPass: TextView = findViewById(R.id.waringpassword)
+
+
+        binding.register.setOnClickListener {
             val itent1 = Intent(this, SignUp:: class.java)
             startActivity(itent1)
             finish()
         }
-        loginButton.setOnClickListener {
+        binding.inputLogin.setOnClickListener {
             if(myUser == inputTextUser.text.toString() && myPass == inputTextPass.text.toString() ){
-                if(rememberPass.isChecked){
+                if(binding.RememberAcc.isChecked){
                     val edit = save.edit()
                     edit.putString("MyUser", inputTextUser.text.toString())
                     edit.putString("MyPass", inputTextPass.text.toString())
@@ -53,8 +50,8 @@ class Login : AppCompatActivity() {
                 warningUse.text = "*Username is incorrect"
             }
         }
-        var userAlready = save.getString("MyUser", null)
-        var passAlready = save.getString("MyPass", null)
+        val userAlready = save.getString("MyUser", null)
+        val passAlready = save.getString("MyPass", null)
         if(userAlready != null || passAlready != null){
             inputTextUser.setText(userAlready)
             inputTextPass.setText(passAlready)

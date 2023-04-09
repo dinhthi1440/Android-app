@@ -4,38 +4,29 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
+import com.example.nextscreen.databinding.ActivityRegisterBinding
 
 class SignUp : AppCompatActivity() {
-
+    private val binding by lazy { ActivityRegisterBinding.inflate(layoutInflater) }
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
-        var returnlogin: TextView = findViewById(R.id.login11)
-        var buttonSignUp: Button = findViewById<Button>(R.id.input_button)
-        var user: EditText = findViewById(R.id.inputLogin)
-        var pass1: EditText = findViewById(R.id.passwordlogin)
-        var pass2: EditText = findViewById(R.id.passwordAgainlogin)
-        var warningUser: TextView = findViewById(R.id.waringuser)
-        var warningPassW1: TextView = findViewById(R.id.waringpassword)
-        var warningPassW2: TextView = findViewById(R.id.waringpassword2)
+        setContentView(binding.root)
 
-        returnlogin.setOnClickListener {
+        binding.login11.setOnClickListener {
             val itent1 = Intent(this, Login:: class.java)
             startActivity(itent1)
             finish()
         }
-        buttonSignUp.setOnClickListener {
-            var str1: String = checkUser(user.text.toString(), warningUser).toString()
-            var str2: String = checkPassWord(pass1.text.toString(), warningPassW1).toString()
-            if(str1=="true" && str2 =="true"){
-                if(checkTrue(pass1.text.toString(), pass2.text.toString(), warningPassW2) == true){
+        binding.signUpButton.setOnClickListener {
+            val userName: String = checkUser(binding.inputLogin.text.toString(), binding.waringuser).toString()
+            val pass1: String = checkPassWord(binding.passwordlogin.text.toString(), binding.waringpassword).toString()
+            if(userName=="true" && pass1 =="true"){
+                if(checkTrue(binding.passwordlogin.text.toString(), binding.passwordAgainlogin.text.toString(), binding.waringpassword2) == true){
                     val itent = Intent(this, Home:: class.java)
-                    itent.putExtra("username", user.text.toString())
-                    itent.putExtra("password", pass2.text.toString())
+                    itent.putExtra("username", binding.inputLogin.text.toString())
+                    itent.putExtra("password", binding.passwordAgainlogin.text.toString())
                     startActivity(itent)
                     finish()
                 }
@@ -43,7 +34,7 @@ class SignUp : AppCompatActivity() {
         }
     }
 
-    fun checkTrue(str1: String, str2: String, t:TextView): Boolean {
+    private fun checkTrue(str1: String, str2: String, t:TextView): Boolean {
         if(str1 == str2){
             return true
         }else{
@@ -52,8 +43,8 @@ class SignUp : AppCompatActivity() {
         }
 
     }
-    fun checkUser(str: String, t: TextView): Boolean {
-        var reg = Regex("^(?=.*[A-Z]).{6,}$")
+    private fun checkUser(str: String, t: TextView): Boolean {
+        val reg = Regex("^(?=.*[A-Z]).{6,}$")
         if(str.matches(reg)){
             t.text=""
             return true
@@ -63,8 +54,8 @@ class SignUp : AppCompatActivity() {
         }
 
     }
-    fun checkPassWord(str: String, t: TextView): Boolean {
-        var reg = Regex("""^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$""")
+    private fun checkPassWord(str: String, t: TextView): Boolean {
+        val reg = Regex("""^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$""")
         if(str.matches(reg)){
             t.text=""
             return true
